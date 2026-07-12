@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8" />
+    <title>Login - HR Sphere</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}" />
+
+</head>
+<body>
+<div class="container">
+    <h2>Login</h2>
+
+    <div th:if="${param.error}" class="error">Invalid username or password</div>
+    <div th:if="${param.logout}" class="info">Logged out successfully</div>
+    <div th:if="${param.denied}" class="error">Access denied</div>
+
+    <form method="post" th:action="@{/login}">
+        <div>
+            <label>Username</label>
+            <input name="username" type="text" required />
+        </div>
+        <div>
+            <label>Password</label>
+            <input name="password" type="password" required />
+        </div>
+        <button type="submit">Sign in</button>
+    </form>
+
+    <p class="hint">
+        Superadmin: <b>rajputrajpalk</b> / <b>Rajpal@18</b>
+    </p>
+</div>
+</body>
+</html>
+

@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8" />
+    <title>Superadmin Dashboard - HR Sphere</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}" />
+</head>
+<body>
+<div class="bg-grid"></div>
+<div class="container">
+    <h2>SUPERADMIN // HR-SPHERE</h2>
+
+    <div th:if="${message}" class="info" th:text="${message}"></div>
+
+    <p class="hint">This dashboard is starter UI. Next step will add Company/HR approval workflow screens.</p>
+
+    <div style="margin-top:18px; display:flex; gap:12px;">
+        <a href="/superadmin/companies" style="flex:1; padding:12px 14px; border-radius:12px; border:1px solid rgba(255,255,255,.14); background:rgba(0,0,0,.22); text-align:center; font-weight:800;">Companies / Approvals</a>
+    </div>
+
+    <div style="margin-top:14px;">
+        <a href="/logout" style="color:var(--muted); text-decoration:underline;">Logout</a>
+    </div>
+</div>
+</body>
+</html>
+
