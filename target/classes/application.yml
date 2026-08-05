@@ -6,21 +6,23 @@ spring:
     name: hr-sphere
 
   datasource:
-    url: jdbc:h2:mem:hr-sphere-db;DB_CLOSE_DELAY=-1;DATABASE_TO_LOWER=TRUE
-
+    url: jdbc:h2:file:./data/hrspheredb;DB_CLOSE_DELAY=-1;AUTO_SERVER=TRUE
     driverClassName: org.h2.Driver
     username: sa
-    password:
+    password: sa
+
+  h2:
+    console:
+      enabled: true
+      path: /h2-console
 
   jpa:
-    database-platform: org.hibernate.dialect.H2Dialect
     hibernate:
       ddl-auto: update
     properties:
       hibernate:
         format_sql: true
     open-in-view: false
-
 
   thymeleaf:
     cache: false
@@ -29,4 +31,3 @@ logging:
   level:
     org.springframework.security: INFO
     com.hr.sphere: INFO
-

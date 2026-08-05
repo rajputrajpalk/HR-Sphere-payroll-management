@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Company Admin Dashboard - HR Sphere</title>
+    <style>
+        :root {
+            --bg-color: #0f172a;
+            --card-bg: #1e293b;
+            --accent: #818cf8;
+            --accent-hover: #6366f1;
+            --text-main: #f8fafc;
+            --text-muted: #94a3b8;
+            --border: #334155;
+            --danger: #ef4444;
+            --success: #22c55e;
+        }
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
+        body { background-color: var(--bg-color); color: var(--text-main); padding: 2rem; }
+        .header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem; border-bottom: 1px solid var(--border); padding-bottom: 1rem; }
+        .header h1 { font-size: 1.8rem; font-weight: 700; color: var(--accent); }
+        .logout-btn { background: var(--danger); color: white; border: none; padding: 0.5rem 1rem; border-radius: 6px; cursor: pointer; text-decoration: none; font-size: 0.9rem; }
+        .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1.5rem; margin-bottom: 2.5rem; }
+        .card { background: var(--card-bg); border: 1px solid var(--border); border-radius: 12px; padding: 1.5rem; }
+        .card h3 { color: var(--text-muted); font-size: 0.85rem; text-transform: uppercase; margin-bottom: 0.5rem; }
+        .card .value { font-size: 2rem; font-weight: 700; color: var(--text-main); }
+        .section-title { font-size: 1.3rem; margin-bottom: 1rem; font-weight: 600; color: var(--text-main); }
+        .form-card { background: var(--card-bg); border: 1px solid var(--border); border-radius: 12px; padding: 1.5rem; margin-bottom: 2rem; }
+        .form-group { margin-bottom: 1rem; display: flex; flex-direction: column; gap: 0.4rem; }
+        .form-group label { font-size: 0.85rem; color: var(--text-muted); }
+        .form-group input { background: #0f172a; border: 1px solid var(--border); padding: 0.6rem 0.8rem; border-radius: 6px; color: white; }
+        .form-row { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem; }
+        .btn-primary { background: var(--accent); color: white; border: none; padding: 0.75rem 1.5rem; font-weight: 600; border-radius: 6px; cursor: pointer; margin-top: 0.5rem; }
+        .btn-primary:hover { background: var(--accent-hover); }
+        table { width: 100%; border-collapse: collapse; background: var(--card-bg); border-radius: 12px; overflow: hidden; border: 1px solid var(--border); }
+        th, td { padding: 1rem; text-align: left; border-bottom: 1px solid var(--border); }
+        th { background: #1a2332; color: var(--text-muted); font-size: 0.85rem; text-transform: uppercase; }
+        .badge { padding: 0.25rem 0.6rem; border-radius: 12px; font-size: 0.75rem; font-weight: 600; }
+        .badge-active { background: rgba(34, 197, 94, 0.2); color: var(--success); }
+        .badge-inactive { background: rgba(239, 68, 68, 0.2); color: var(--danger); }
+        .btn-action { padding: 0.4rem 0.8rem; border-radius: 6px; border: none; cursor: pointer; font-size: 0.8rem; font-weight: 600; }
+        .btn-toggle { background: #3b82f6; color: white; }
+        .btn-delete { background: var(--danger); color: white; margin-left: 0.5rem; }
+    </style>
+</head>
+<body>
+
+    <div class="header">
+        <div>
+            <h1>Company Admin Dashboard</h1>
+            <p th:text="${'Tenant: ' + company.name + ' (' + company.slug + ')'}" style="color: var(--text-muted); font-size: 0.9rem; margin-top: 0.2rem;"></p>
+        </div>
+        <div>
+            <a th:href="@{/logout}" class="logout-btn">Logout</a>
+        </div>
+    </div>
+
+    <!-- Analytics Cards -->
+    <div class="grid">
+        <div class="card">
+            <h3>HR Managers</h3>
+            <div class="value" th:text="${hrs.size() + ' / ' + company.maxHRs}">0 / 5</div>
+        </div>
+        <div class="card">
+            <h3>Total Employees</h3>
+            <div class="value" th:text="${employees.size() + ' / ' + company.maxEmployees}">0 / 100</div>
+        </div>
+        <div class="card">
+            <h3>Total Company Tasks</h3>
+            <div class="value" th:text="${totalTasks}">0</div>
+        </div>
+        <div class="card">
+            <h3>Task Completion Rate</h3>
+            <div class="value" th:text="${completionRate + '%'}">0%</div>
+        </div>
+    </div>
+
+    <!-- Create HR Form -->
+    <div class="form-card">
+        <h2 class="section-title">Add New HR Manager</h2>
+        <form th:action="@{/companyadmin/hr/create}" method="post">
+            <div class="form-row">
+                <div class="form-group">
+                    <label>Full Name</label>
+                    <input type="text" name="fullName" placeholder="Jane Doe" required>
+                </div>
+                <div class="form-group">
+                    <label>Email</label>
+                    <input type="email" name="email" placeholder="jane@company.com" required>
+                </div>
+                <div class="form-group">
+                    <label>Username</label>
+                    <input type="text" name="username" placeholder="hr_jane" required>
+                </div>
+                <div class="form-group">
+                    <label>Password</label>
+                    <input type="password" name="password" placeholder="••••••••" required>
+                </div>
+            </div>
+            <button type="submit" class="btn-primary">Add HR Manager</button>
+        </form>
+    </div>
+
+    <!-- HR Management Table -->
+    <h2 class="section-title">Managed HR Personnel</h2>
+    <table>
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Full Name</th>
+                <th>Username</th>
+                <th>Email</th>
+                <th>Status</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr th:each="hr : ${hrs}">
+                <td th:text="${hr.id}">1</td>
+                <td th:text="${hr.fullName}" style="font-weight: 600;">Jane Doe</td>
+                <td th:text="${hr.username}">hr_jane</td>
+                <td th:text="${hr.email}">jane@company.com</td>
+                <td>
+                    <span th:if="${hr.status.name() == 'ACTIVE'}" class="badge badge-active">ACTIVE</span>
+                    <span th:if="${hr.status.name() == 'INACTIVE'}" class="badge badge-inactive">INACTIVE</span>
+                </td>
+                <td>
+                    <form th:action="@{/companyadmin/hr/toggle-status}" method="post" style="display:inline;">
+                        <input type="hidden" name="hrId" th:value="${hr.id}">
+                        <button type="submit" class="btn-action btn-toggle" th:text="${hr.status.name() == 'ACTIVE' ? 'Deactivate' : 'Activate'}">Toggle</button>
+                    </form>
+                    <form th:action="@{/companyadmin/hr/delete}" method="post" style="display:inline;">
+                        <input type="hidden" name="hrId" th:value="${hr.id}">
+                        <button type="submit" class="btn-action btn-delete" onclick="return confirm('Remove this HR manager?')">Remove</button>
+                    </form>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+
+</body>
+</html>

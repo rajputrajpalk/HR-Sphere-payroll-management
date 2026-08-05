@@ -9,8 +9,15 @@ import java.util.Optional;
 public interface AppUserRepository extends JpaRepository<AppUser, Long> {
     Optional<AppUser> findByUsername(String username);
 
+    List<AppUser> findByCompanyId(Long companyId);
+
     List<AppUser> findByCompanyIdAndRole(Long companyId, AppUser.UserRole role);
 
-    List<AppUser> findByCompanyIdAndRoleAndApprovalStatus(Long companyId, AppUser.UserRole role, AppUser.ApprovalStatus status);
-}
+    List<AppUser> findByManagedByHRId(Long hrId);
 
+    long countByCompanyIdAndRole(Long companyId, AppUser.UserRole role);
+
+    long countByCompanyIdAndStatus(Long companyId, AppUser.UserStatus status);
+
+    long countByStatus(AppUser.UserStatus status);
+}
