@@ -29,7 +29,10 @@ Step 3: Navigate to the extracted project root directory:
 Step 4: Execute the Spring Boot run command:
 
         Windows (Command Prompt / PowerShell):
+        mvn clean package 
+        
         mvn spring-boot:run
+
 
         Linux / Mac Terminal:
         mvn spring-boot:run
