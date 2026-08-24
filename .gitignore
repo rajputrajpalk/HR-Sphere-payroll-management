@@ -1,0 +1,22 @@
+# Maven
+target/
+
+# Java compiled files
+*.class
+
+# H2 Database files
+*.mv.db
+*.lock.db
+*.trace.db
+
+# IDE files
+.idea/
+.vscode/
+*.iml
+
+# Logs
+*.log
+
+# OS files
+.DS_Store
+Thumbs.db
