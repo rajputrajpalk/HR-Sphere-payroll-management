@@ -3,6 +3,15 @@ package com.hr.sphere.model;
 import jakarta.persistence.*;
 import java.time.LocalDateTime;
 
+/**
+ * ============================================================================
+ * Company Entity (Tenant Organization)
+ * ============================================================================
+ * 
+ * Represents an independent tenant organization in HR Sphere.
+ * Enforces multi-tenancy boundaries, custom quotas for staff capacity,
+ * and organization-level activation/suspension states.
+ */
 @Entity
 @Table(name = "companies", uniqueConstraints = {
         @UniqueConstraint(name = "uk_company_slug", columnNames = {"slug"})
@@ -16,8 +25,11 @@ public class Company {
     @Column(nullable = false, length = 200)
     private String name;
 
+    /**
+     * Unique URL identifier / short code for the company (e.g. "acme").
+     */
     @Column(nullable = false, length = 100)
-    private String slug; // used as company domain / code
+    private String slug;
 
     @Column(length = 200)
     private String domain;
@@ -46,39 +58,117 @@ public class Company {
         this.updatedAt = LocalDateTime.now();
     }
 
+    /**
+     * Operational status of the company.
+     */
     public enum CompanyStatus {
         ACTIVE,
         SUSPENDED
     }
 
-    // Explicit Getters and Setters
-    public Long getId() { return id; }
-    public void setId(Long id) { this.id = id; }
+    // ========================================================================
+    // Domain & Business Helper Methods
+    // ========================================================================
 
-    public String getName() { return name; }
-    public void setName(String name) { this.name = name; }
+    public boolean isActive() {
+        return this.status == CompanyStatus.ACTIVE;
+    }
 
-    public String getSlug() { return slug; }
-    public void setSlug(String slug) { this.slug = slug; }
+    public boolean isSuspended() {
+        return this.status == CompanyStatus.SUSPENDED;
+    }
 
-    public String getDomain() { return domain; }
-    public void setDomain(String domain) { this.domain = domain; }
+    // ========================================================================
+    // Getters and Setters
+    // ========================================================================
 
-    public String getEmail() { return email; }
-    public void setEmail(String email) { this.email = email; }
+    public Long getId() {
+        return id;
+    }
 
-    public CompanyStatus getStatus() { return status; }
-    public void setStatus(CompanyStatus status) { this.status = status; }
+    public void setId(Long id) {
+        this.id = id;
+    }
 
-    public Integer getMaxHRs() { return maxHRs; }
-    public void setMaxHRs(Integer maxHRs) { this.maxHRs = maxHRs; }
+    public String getName() {
+        return name;
+    }
 
-    public Integer getMaxEmployees() { return maxEmployees; }
-    public void setMaxEmployees(Integer maxEmployees) { this.maxEmployees = maxEmployees; }
+    public void setName(String name) {
+        this.name = name;
+    }
 
-    public LocalDateTime getCreatedAt() { return createdAt; }
-    public void setCreatedAt(LocalDateTime createdAt) { this.createdAt = createdAt; }
+    public String getSlug() {
+        return slug;
+    }
 
-    public LocalDateTime getUpdatedAt() { return updatedAt; }
-    public void setUpdatedAt(LocalDateTime updatedAt) { this.updatedAt = updatedAt; }
+    public void setSlug(String slug) {
+        this.slug = slug;
+    }
+
+    public String getDomain() {
+        return domain;
+    }
+
+    public void setDomain(String domain) {
+        this.domain = domain;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public CompanyStatus getStatus() {
+        return status;
+    }
+
+    public void setStatus(CompanyStatus status) {
+        this.status = status;
+    }
+
+    public Integer getMaxHRs() {
+        return maxHRs;
+    }
+
+    public void setMaxHRs(Integer maxHRs) {
+        this.maxHRs = maxHRs;
+    }
+
+    public Integer getMaxEmployees() {
+        return maxEmployees;
+    }
+
+    public void setMaxEmployees(Integer maxEmployees) {
+        this.maxEmployees = maxEmployees;
+    }
+
+    public LocalDateTime getCreatedAt() {
+        return createdAt;
+    }
+
+    public void setCreatedAt(LocalDateTime createdAt) {
+        this.createdAt = createdAt;
+    }
+
+    public LocalDateTime getUpdatedAt() {
+        return updatedAt;
+    }
+
+    public void setUpdatedAt(LocalDateTime updatedAt) {
+        this.updatedAt = updatedAt;
+    }
+
+    @Override
+    public String toString() {
+        return "Company{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", slug='" + slug + '\'' +
+                ", status=" + status +
+                '}';
+    }
 }
