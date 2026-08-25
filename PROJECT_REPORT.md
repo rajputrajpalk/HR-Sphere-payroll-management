@@ -302,3 +302,63 @@ By combining Task management, Leave processing, and Payroll generation into a si
 - Spring Security Reference: https://docs.spring.io/spring-security/reference/
 - Thymeleaf Documentation: https://www.thymeleaf.org/
 - H2 Database Engine: https://www.h2database.com/
+
+# FOLDER STRUCTUTR:
+C:.
+├───.mvn
+├───.vscode
+├───data
+├───src
+│   └───main
+│       ├───java
+│       │   └───com
+│       │       └───hr
+│       │           └───sphere
+│       │               ├───bootstrap
+│       │               ├───config
+│       │               ├───model
+│       │               ├───repo
+│       │               ├───security
+│       │               └───web
+│       │                   ├───companyadmin
+│       │                   ├───employee
+│       │                   ├───hr
+│       │                   └───superadmin
+│       └───resources
+│           ├───static
+│           │   └───css
+│           └───templates
+│               ├───companyadmin
+│               ├───employee
+│               ├───hr
+│               └───superadmin
+└───target
+    ├───classes
+    │   ├───com
+    │   │   └───hr
+    │   │       └───sphere
+    │   │           ├───bootstrap
+    │   │           ├───config
+    │   │           ├───model
+    │   │           ├───repo
+    │   │           ├───security
+    │   │           └───web
+    │   │               ├───companyadmin
+    │   │               ├───employee
+    │   │               ├───hr
+    │   │               └───superadmin
+    │   ├───static
+    │   │   └───css
+    │   └───templates
+    │       ├───companyadmin
+    │       ├───employee
+    │       ├───hr
+    │       └───superadmin
+    ├───generated-sources
+    │   └───annotations
+    ├───generated-test-sources
+    │   └───test-annotations
+    └───maven-status
+        └───maven-compiler-plugin
+            └───compile
+                └───default-compile
