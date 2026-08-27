@@ -1,13 +1,15 @@
-FROM eclipse-temurin:21-jdk
+FROM maven:3.9.9-eclipse-temurin-21
 
 WORKDIR /app
 
-COPY . .
+COPY pom.xml .
 
-RUN chmod +x mvnw
+RUN mvn dependency:go-offline -B
 
-RUN ./mvnw clean package -DskipTests
+COPY src ./src
+
+RUN mvn clean package -DskipTests
 
 EXPOSE 10000
 
-CMD ["sh", "-c", "java -jar target/hr-sphere-0.1.0-SNAPSHOT.jar"]
+CMD ["java", "-jar", "target/hr-sphere-0.1.0-SNAPSHOT.jar"]
