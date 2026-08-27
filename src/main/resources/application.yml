@@ -4,43 +4,46 @@
 
 # Embedded Web Server Settings
 server:
-  port: 8080
+  port: ${PORT:8080}
 
+# ============================================================================
 # Spring Core & Persistence Settings
+# ============================================================================
 spring:
   application:
     name: hr-sphere
 
-  # H2 Database Connection Settings (Persistent Local File Mode)
+  # H2 Database Connection Settings
   datasource:
     # Storage file is persisted at ./data/hrspheredb.mv.db
-    # AUTO_SERVER=TRUE allows concurrent external connections (e.g. H2 Web Console, DBeaver)
+    # AUTO_SERVER=TRUE allows concurrent external connections
     url: jdbc:h2:file:./data/hrspheredb;DB_CLOSE_DELAY=-1;AUTO_SERVER=TRUE
     driverClassName: org.h2.Driver
     username: sa
     password: sa
 
-  # Interactive H2 Web Console Configuration
+  # H2 Web Console
   h2:
     console:
       enabled: true
       path: /h2-console
 
-  # Spring Data JPA & Hibernate ORM Settings
+  # Spring Data JPA & Hibernate ORM
   jpa:
     hibernate:
-      # Auto-creates/updates tables matching JPA Entity models on startup without wiping data
       ddl-auto: update
     properties:
       hibernate:
         format_sql: true
     open-in-view: false
 
-  # Thymeleaf Template Engine Configuration
+  # Thymeleaf
   thymeleaf:
-    cache: false # Disabled for instant UI template hot-reloading during development
+    cache: false
 
+# ============================================================================
 # Application Logging Settings
+# ============================================================================
 logging:
   level:
     root: INFO
